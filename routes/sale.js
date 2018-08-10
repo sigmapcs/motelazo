@@ -1,10 +1,11 @@
 const Sale = require('../models/sale'),
+    moment = require('moment'),
     c = console.log
 
 const apiResponse = (req, res, err, data) => {
     if (err) {
         res.status(500).send({
-            message: `Error interno del servicor. ${err.message}`
+            message: `Error interno del servidor. ${err.message}`
         })
     } else {
         if (data) {
@@ -36,7 +37,7 @@ const postSale = async (req, res) => {
 
 const getSale = async (req, res) => {
     await Sale
-        .findById(req.params.id)
+        .find({code: req.params.code})
         .exec((err, data) => apiResponse(req, res, err, data))
 }
 
@@ -58,6 +59,7 @@ const deleteSale = async (req, res) => {
             (err, data) => apiResponse(req, res, err, data)
         )
 }
+
 
 
 module.exports = {
